@@ -1,38 +1,158 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600&display=swap');
 .App {
-  text-align: center;
+    text-align: center;
 }
 
 .App-logo {
-  height: 40vmin;
-  pointer-events: none;
+    height: 40vmin;
+    pointer-events: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+    .App-logo {
+        animation: App-logo-spin infinite 20s linear;
+    }
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
 }
 
 .App-link {
-  color: #61dafb;
+    color: #61dafb;
 }
 
 @keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.video-chat-page.container {
+    width: 100%;
+    float: left;
+}
+
+.video-chat-page.container .video-chat-window {
+    width: 75%;
+    float: left;
+    min-height: 100%;
+}
+
+.placeholder-img {
+    width: 100%;
+    display: block;
+    height: 100%;
+}
+
+.video-chat-page.container .sidebar {
+    width: 25%;
+    float: left;
+}
+
+.video-chat-page.container .sidebar-container {
+    padding: 30px;
+}
+
+.list-item {
+    font: 400 18px 'Source Sans Pro';
+    cursor: pointer;
+}
+
+.list-item:hover {
+    background-color: #EDF2F7;
+}
+
+.dropdown-item ul {
+    padding: 0;
+}
+
+.dropdown-item summary {
+    font: 600 18px 'Source Sans Pro';
+    padding: 30px 0;
+    border-bottom: 1px solid #EBEEF2;
+    cursor: pointer;
+    margin: 0;
+}
+
+.dropdown-item summary:hover {
+    color: #5A67D8;
+}
+
+.navbar {
+    float: left;
+    width: 100%;
+    padding: 20px 0;
+}
+
+.navbar a {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    margin: 0 0 0 20px;
+}
+
+.video-chat-page-header {
+    width: 100%;
+}
+
+.dropdown-item li {
+    font: 400 16px 'Source Sans Pro';
+    padding: 20px;
+    list-style: none;
+}
+
+.emotion-section {
+    padding: 30px;
+    text-align: center;
+}
+
+.emotion-section img {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.emotion-section img:hover {
+    width: 55px;
+}
+
+.switch-section {
+    float: right;
+}
+
+.switch-section img {
+    float: left;
+}
+
+.switch_off,
+.switch_on {
+    width: 80px;
+    margin: 0 60px 0 0;
+    cursor: pointer;
+}
+
+.switch_off.hide,
+.switch_on.hide {
+    display: none;
+}
+
+.switch_off.display,
+.switch_on.display {
+    display: block;
+}
+
+.username {
+    float: left;
+    margin: 5px 20px 0 0;
+    font: 600 18px 'Source Sans Pro';
 }
