@@ -8,7 +8,6 @@ import switch_off from '../assets/images/switch-off.svg';
 import switch_on from '../assets/images/switch-on.svg';
 
 function VideoChatPage() {
-    let name = 'Ryan';
     const [isActive, setActive] = useState("false");
 
     const ToggleClass = () => {
@@ -23,7 +22,6 @@ function VideoChatPage() {
                     <div className="switch-section">
                         <img className={isActive ? "switch_off display" : "switch_off hide"}  onClick={ToggleClass} src={switch_off} alt="Button to switch off facial recognition"/>
                         <img className={isActive ? "switch_on hide" : "switch_on display"} onClick={ToggleClass} src={switch_on} alt="Button to switch on facial recognition"/>
-                        <h1 className="username">Hello {name}</h1>
                     </div>
                 </nav>
             </header>
