@@ -18,7 +18,7 @@ function VideoChatPage() {
         <div className="video-chat-page container">
             <header className="video-chat-page-header">
                 <nav className="navbar">
-                    <a href="/login"><img className="previous_icon" src={previous_icon} alt="previous icon"/></a>
+                    <a href="/"><img className="previous_icon" src={previous_icon} alt="previous icon"/></a>
                     <div className="switch-section">
                         <img className={isActive ? "switch_off display" : "switch_off hide"}  onClick={ToggleClass} src={switch_off} alt="Button to switch off facial recognition"/>
                         <img className={isActive ? "switch_on hide" : "switch_on display"} onClick={ToggleClass} src={switch_on} alt="Button to switch on facial recognition"/>
