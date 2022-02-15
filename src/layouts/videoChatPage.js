@@ -6,6 +6,8 @@ import smiley_face from '../assets/images/smiley-face.svg';
 import frowning_face from '../assets/images/frowning-face.svg';
 import switch_off from '../assets/images/switch-off.svg';
 import switch_on from '../assets/images/switch-on.svg';
+import RTCMesh from 'react-rtc-real';
+require('react-rtc-real/assets/index.css');
 
 function VideoChatPage() {
     const [isActive, setActive] = useState("false");
@@ -28,7 +30,7 @@ function VideoChatPage() {
             
             <div className="video-chat-page-body">
                 <div className="video-chat-window">
-                    <img className="placeholder-img" src={placeholder} alt="placeholder"/>
+                    <RTCMesh URL="wss://16b4-2600-1700-3210-5050-a551-9975-147d-fa1a.ngrok.io/"/>
                 </div>
                 <div className="sidebar">
                     <div className="sidebar-container">
