@@ -30,7 +30,7 @@ function VideoChatPage() {
             
             <div className="video-chat-page-body">
                 <div className="video-chat-window">
-                    <RTCMesh URL="wss://16b4-2600-1700-3210-5050-a551-9975-147d-fa1a.ngrok.io/"/>
+                    <RTCMesh URL="wss://localhost:3000/" />
                 </div>
                 <div className="sidebar">
                     <div className="sidebar-container">
