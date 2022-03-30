@@ -1,36 +1,67 @@
-import React, { useState } from 'react';
-import placeholder from '../assets/images/placeholder.jpeg';
+'use strict';
+import React, { useState, useEffect } from 'react';
 import previous_icon from '../assets/images/previous.svg';
 import neutral_face from '../assets/images/neutral-face.svg';
 import smiley_face from '../assets/images/smiley-face.svg';
 import frowning_face from '../assets/images/frowning-face.svg';
 import switch_off from '../assets/images/switch-off.svg';
 import switch_on from '../assets/images/switch-on.svg';
-import RTCMesh from 'react-rtc-real';
-require('react-rtc-real/assets/index.css');
+import 'webrtc-adapter';
 
 function VideoChatPage() {
     const [isActive, setActive] = useState("false");
 
     const ToggleClass = () => {
-        setActive(!isActive); 
+        setActive(!isActive);
     };
+
+    useEffect(() => {
+        // On this codelab, you will be streaming only video (video: true).
+        const mediaStreamConstraints = {
+            video: true
+        };
+
+        // Video element where stream will be placed.
+        const localVideo = document.querySelector('video');
+
+        // Local stream that will be reproduced on the video.
+        let localStream;
+
+        // Handles success by adding the MediaStream to the video element.
+        function gotLocalMediaStream(mediaStream) {
+            console.log(mediaStream);
+            localStream = mediaStream;
+            localVideo.srcObject = localStream;
+            localVideo.onloadedmetadata = function(e) {
+                localVideo.play();
+            };
+        }
+
+        // Handles error by logging a message to the console with the error message.
+        function handleLocalMediaStreamError(error) {
+            console.log('navigator.getUserMedia error: ', error);
+        }
+
+        // Initializes media stream.
+        navigator.mediaDevices.getUserMedia(mediaStreamConstraints)
+            .then(gotLocalMediaStream).catch(handleLocalMediaStreamError);
+    });
 
     return (
         <div className="video-chat-page container">
             <header className="video-chat-page-header">
                 <nav className="navbar">
-                    <a href="/"><img className="previous_icon" src={previous_icon} alt="previous icon"/></a>
+                    <a href="/"><img className="previous_icon" src={previous_icon} alt="previous icon" /></a>
                     <div className="switch-section">
-                        <img className={isActive ? "switch_off display" : "switch_off hide"}  onClick={ToggleClass} src={switch_off} alt="Button to switch off facial recognition"/>
-                        <img className={isActive ? "switch_on hide" : "switch_on display"} onClick={ToggleClass} src={switch_on} alt="Button to switch on facial recognition"/>
+                        <img className={isActive ? "switch_off display" : "switch_off hide"} onClick={ToggleClass} src={switch_off} alt="Button to switch off facial recognition" />
+                        <img className={isActive ? "switch_on hide" : "switch_on display"} onClick={ToggleClass} src={switch_on} alt="Button to switch on facial recognition" />
                     </div>
                 </nav>
             </header>
-            
+
             <div className="video-chat-page-body">
                 <div className="video-chat-window">
-                    <RTCMesh URL="wss://fdbd-2600-1700-3210-5050-d1b9-a3cd-b080-d241.ngrok.io/" />
+                    <video autoplay playsinline></video>
                 </div>
                 <div className="sidebar">
                     <div className="sidebar-container">
@@ -69,9 +100,9 @@ function VideoChatPage() {
                         </details>
                     </div>
                     <div className="emotion-section">
-                        <img className="smiley_face" src={smiley_face} alt="Smiley Face"/>
-                        <img className="neutral_face" src={neutral_face} alt="Neutral Face"/>
-                        <img className="frowning_face" src={frowning_face} alt="Frowning Face"/>
+                        <img className="smiley_face" src={smiley_face} alt="Smiley Face" />
+                        <img className="neutral_face" src={neutral_face} alt="Neutral Face" />
+                        <img className="frowning_face" src={frowning_face} alt="Frowning Face" />
                     </div>
                 </div>
             </div>
