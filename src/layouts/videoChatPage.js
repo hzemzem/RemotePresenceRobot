@@ -6,7 +6,8 @@ import smiley_face from '../assets/images/smiley-face.svg';
 import frowning_face from '../assets/images/frowning-face.svg';
 import switch_off from '../assets/images/switch-off.svg';
 import switch_on from '../assets/images/switch-on.svg';
-import 'webrtc-adapter';
+import adapter from 'webrtc-adapter';
+import { io } from 'socket.io-client';
 
 function VideoChatPage() {
     const [isActive, setActive] = useState("false");
@@ -16,35 +17,127 @@ function VideoChatPage() {
     };
 
     useEffect(() => {
-        // On this codelab, you will be streaming only video (video: true).
-        const mediaStreamConstraints = {
-            video: true
+        const localVideo = document.getElementById('local-video');
+
+        let VideoChat = {
+            socket: io(),
+
+            handleLocalMediaStreamError: function (error) {
+                console.log('navigator.getUserMedia error: ', error);
+            },
+
+            requestMediaStream: function (event) {
+                navigator.mediaDevices
+                    .getUserMedia({ video: true })
+                    .then(stream => {
+                        VideoChat.onMediaStream(stream);
+                    })
+                    .catch(VideoChat.handleLocalMediaStreamError);
+            },
+
+            readyToCall: function (event) {
+                VideoChat.callButton.removeAttribute('disabled');
+            },
+
+            onMediaStream: function (mediaStream) {
+                console.log(mediaStream);
+                let localStream = mediaStream;
+                localVideo.srcObject = localStream;
+                localVideo.onloadedmetadata = function (e) {
+                    localVideo.play();
+                };
+                VideoChat.socket.emit('join', 'test');
+                VideoChat.socket.on('ready', VideoChat.readyToCall);
+            },
+
+            onOffer: function (offer) {
+                VideoChat.socket.on('token', VideoChat.onToken(VideoChat.createAnswer(offer)));
+                VideoChat.socket.emit('token');
+            },
+
+            startCall: function (event) {
+                VideoChat.socket.on('token', VideoChat.onToken(VideoChat.createOffer));
+                VideoChat.socket.emit('token');
+            },
+
+            createAnswer: function (offer) {
+                return function () {
+                    let rtcOffer = new RTCSessionDescription(JSON.parse(offer));
+                    VideoChat.peerConnection.setRemoteDescription(rtcOffer);
+                    VideoChat.peerConnection.createAnswer(
+                        function (answer) {
+                            VideoChat.peerConnection.setLocalDescription(answer);
+                            VideoChat.socket.emit('answer', JSON.stringify(answer));
+                        },
+                        function (err) {
+                            console.log(err);
+                        }
+                    );
+                }
+            },
+
+            onToken: function (callback) {
+                return function (token) {
+                    VideoChat.peerConnection = new RTCPeerConnection({
+                        iceServers: token.iceServers
+                    });
+                    VideoChat.peerConnection.addStream(VideoChat.localStream);
+                    VideoChat.peerConnection.onicecandidate = VideoChat.onIceCandidate;
+                    VideoChat.peerConnection.onaddstream = VideoChat.onAddStream;
+                    VideoChat.socket.on('candidate', VideoChat.onCandidate);
+                    VideoChat.socket.on('answer', VideoChat.onAnswer);
+                    callback();
+                }
+            },
+
+            onAddStream: function (event) {
+                VideoChat.remoteVideo = document.getElementById('remote-video');
+                VideoChat.remoteVideo.srcObject = event.stream;
+                VideoChat.remoteVideo.onloadedmetadata = function (e) {
+                    VideoChat.remoteVideo.play();
+                };
+            },
+
+            onAnswer: function (answer) {
+                var rtcAnswer = new RTCSessionDescription(JSON.parse(answer));
+                VideoChat.peerConnection.setRemoteDescription(rtcAnswer);
+            },
+
+            createOffer: function () {
+                VideoChat.peerConnection.createOffer(
+                    function (offer) {
+                        VideoChat.peerConnection.setLocalDescription(offer);
+                        VideoChat.socket.emit('offer', JSON.stringify(offer));
+                    },
+                    function (err) {
+                        console.log(err);
+                    }
+                );
+            },
+
+            onIceCandidate: function (event) {
+                if (event.candidate) {
+                    console.log('Generated candidate!');
+                    VideoChat.socket.emit('candidate', JSON.stringify(event.candidate));
+                }
+            },
+
+            onCandidate: function (candidate) {
+                let rtcCandidate = new RTCIceCandidate(JSON.parse(candidate));
+                VideoChat.peerConnection.addIceCandidate(rtcCandidate);
+            }
         };
 
-        // Video element where stream will be placed.
-        const localVideo = document.querySelector('video');
+        VideoChat.requestMediaStream();
 
-        // Local stream that will be reproduced on the video.
-        let localStream;
+        VideoChat.callButton = document.getElementById('call');
 
-        // Handles success by adding the MediaStream to the video element.
-        function gotLocalMediaStream(mediaStream) {
-            console.log(mediaStream);
-            localStream = mediaStream;
-            localVideo.srcObject = localStream;
-            localVideo.onloadedmetadata = function(e) {
-                localVideo.play();
-            };
-        }
+        VideoChat.callButton.addEventListener(
+            'click',
+            VideoChat.startCall,
+            false
+        );
 
-        // Handles error by logging a message to the console with the error message.
-        function handleLocalMediaStreamError(error) {
-            console.log('navigator.getUserMedia error: ', error);
-        }
-
-        // Initializes media stream.
-        navigator.mediaDevices.getUserMedia(mediaStreamConstraints)
-            .then(gotLocalMediaStream).catch(handleLocalMediaStreamError);
     });
 
     return (
@@ -61,7 +154,12 @@ function VideoChatPage() {
 
             <div className="video-chat-page-body">
                 <div className="video-chat-window">
-                    <video autoplay playsinline></video>
+                    <video id="local-video" autoplay></video>
+                    <video id="remote-video" autoplay></video>
+
+                    <div>
+                        <button id="call">Call</button>
+                    </div>
                 </div>
                 <div className="sidebar">
                     <div className="sidebar-container">
