@@ -13,9 +13,9 @@ export default class VideoCall {
                 iceServers: [
                     { urls: 'stun:stun4.l.google.com:19302' },
                     {
-                        urls: process.env.REACT_APP_TURN_SERVERS.split(','),
-                        username: process.env.REACT_APP_TURN_USERNAME,
-                        credential: process.env.REACT_APP_TURN_CREDENCIAL
+                        urls: 'turn:numb.viagenie.ca?transport=udp',
+                        username: 'hajar.zemzem@gmail.com',
+                        credential: 'Zemzem.25'
                     },
                 ]
             }
