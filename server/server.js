@@ -19,8 +19,8 @@ app.use((req, res, next) => {
     res.sendFile(path.join(__dirname, "..", "build", "index.html"));
 });
 
-server.listen(process.env.PORT || 8080, function() {
-    console.log('listening on port 8080');
+server.listen(process.env.PORT || 3000, function() {
+    console.log('listening on port 3000');
 });
 
 io.on('connection', function(socket) {

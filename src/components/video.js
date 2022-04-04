@@ -1,19 +1,12 @@
-import React, {  useState } from 'react';
+import React from 'react';
 import VideoCall from '../helpers/simple-peer';
 import '../styles/video.css';
 import io from 'socket.io-client';
 import { getDisplayStream } from '../helpers/media-access';
 import { ShareScreenIcon, MicOnIcon, MicOffIcon, CamOnIcon, CamOffIcon } from './Icons';
-import previous_icon from '../assets/images/previous.svg';
-import neutral_face from '../assets/images/neutral-face.svg';
-import smiley_face from '../assets/images/smiley-face.svg';
-import frowning_face from '../assets/images/frowning-face.svg';
-import switch_off from '../assets/images/switch-off.svg';
-import switch_on from '../assets/images/switch-on.svg';
 
 class Video extends React.Component {
   constructor() {
-
     super();
     this.state = {
       localStream: {},
@@ -154,136 +147,77 @@ class Video extends React.Component {
   };
   render() {
     return (
-
-      <div className="video-chat-page container">
-        <header className="video-chat-page-header">
-          <nav className="navbar">
-            <a href="/"><img className="previous_icon" src={previous_icon} alt="previous icon" /></a>
-            <div className="switch-section">
-              {/* <img className={isActive ? "switch_off display" : "switch_off hide"} onClick={ToggleClass} src={switch_off} alt="Button to switch off facial recognition" />
-              <img className={isActive ? "switch_on hide" : "switch_on display"} onClick={ToggleClass} src={switch_on} alt="Button to switch on facial recognition" /> */}
-            </div>
-          </nav>
-        </header>
-
-        <div className="video-chat-page-body">
-          <div className="video-chat-window">
-            <div className='video-wrapper'>
-              <div className='local-video-wrapper'>
-                <video
-                  autoPlay
-                  id='localVideo'
-                  muted
-                  ref={video => (this.localVideo = video)}
-                />
-              </div>
-              <video
-                autoPlay
-                className={`${this.state.connecting || this.state.waiting ? 'hide' : ''
-                  }`}
-                id='remoteVideo'
-                ref={video => (this.remoteVideo = video)}
-              />
-
-              <div className='controls'>
-                <button
-                  className='control-btn'
-                  onClick={() => {
-                    this.getDisplay();
-                  }}
-                >
-                  <ShareScreenIcon />
-                </button>
-
-
-                <button
-                  className='control-btn'
-                  onClick={() => {
-                    this.setAudioLocal();
-                  }}
-                >
-                  {
-                    this.state.micState ? (
-                      <MicOnIcon />
-                    ) : (
-                      <MicOffIcon />
-                    )
-                  }
-                </button>
-
-                <button
-                  className='control-btn'
-                  onClick={() => {
-                    this.setVideoLocal();
-                  }}
-                >
-                  {
-                    this.state.camState ? (
-                      <CamOnIcon />
-                    ) : (
-                      <CamOffIcon />
-                    )
-                  }
-                </button>
-              </div>
-
-
-
-              {this.state.connecting && (
-                <div className='status'>
-                  <p>Establishing connection...</p>
-                </div>
-              )}
-              {this.state.waiting && (
-                <div className='status'>
-                  <p>Waiting for someone to join...</p>
-                </div>
-              )}
-            </div>
-          </div>
-          <div className="sidebar">
-            <div className="sidebar-container">
-              <details className="dropdown-item">
-                <summary className="list-title">Voice Effects</summary>
-                <ul>
-                  <li className="list-item">
-                    Test Item
-                  </li>
-                  <li className="list-item">
-                    Test Item
-                  </li>
-                </ul>
-              </details>
-              <details className="dropdown-item list-closed">
-                <summary className="list-title">Filters</summary>
-                <ul>
-                  <li className="list-item">
-                    Test Item
-                  </li>
-                  <li className="list-item">
-                    Test Item
-                  </li>
-                </ul>
-              </details>
-              <details className="dropdown-item list-closed">
-                <summary className="list-title">Backgrounds</summary>
-                <ul>
-                  <li className="list-item">
-                    Test Item
-                  </li>
-                  <li className="list-item">
-                    Test Item
-                  </li>
-                </ul>
-              </details>
-            </div>
-            <div className="emotion-section">
-              <img className="smiley_face" src={smiley_face} alt="Smiley Face" />
-              <img className="neutral_face" src={neutral_face} alt="Neutral Face" />
-              <img className="frowning_face" src={frowning_face} alt="Frowning Face" />
-            </div>
-          </div>
+      <div className='video-wrapper'>
+        <div className='local-video-wrapper'>
+          <video
+            autoPlay
+            id='localVideo'
+            muted
+            ref={video => (this.localVideo = video)}
+          />
         </div>
+        <video
+          autoPlay
+          className={`${this.state.connecting || this.state.waiting ? 'hide' : ''
+            }`}
+          id='remoteVideo'
+          ref={video => (this.remoteVideo = video)}
+        />
+
+        <div className='controls'>
+          <button
+            className='control-btn'
+            onClick={() => {
+              this.getDisplay();
+            }}
+          >
+            <ShareScreenIcon />
+          </button>
+
+
+          <button
+            className='control-btn'
+            onClick={() => {
+              this.setAudioLocal();
+            }}
+          >
+            {
+              this.state.micState ? (
+                <MicOnIcon />
+              ) : (
+                <MicOffIcon />
+              )
+            }
+          </button>
+
+          <button
+            className='control-btn'
+            onClick={() => {
+              this.setVideoLocal();
+            }}
+          >
+            {
+              this.state.camState ? (
+                <CamOnIcon />
+              ) : (
+                <CamOffIcon />
+              )
+            }
+          </button>
+        </div>
+
+
+
+        {this.state.connecting && (
+          <div className='status'>
+            <p>Establishing connection...</p>
+          </div>
+        )}
+        {this.state.waiting && (
+          <div className='status'>
+            <p>Waiting for someone...</p>
+          </div>
+        )}
         {this.renderFull()}
       </div>
     );

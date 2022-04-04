@@ -12,7 +12,7 @@ export function goToRoomInput({ history }) {
   return (
     <div className="enter-room-container">
       <form>
-        <h1>Please Enter Robot ID</h1>
+        <label>Please Enter Robot ID</label>
         <input type="text" value={roomId} placeholder="Room id" onChange={(event) => {
           setRoomId(event.target.value)
         }} />

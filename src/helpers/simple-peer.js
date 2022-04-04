@@ -1,7 +1,7 @@
 import Peer from 'simple-peer'
 
 export default class VideoCall {
-    peer = null
+    peer = null 
     init = (stream, initiator) => {
         this.peer = new Peer({
             initiator: initiator,
@@ -11,11 +11,11 @@ export default class VideoCall {
             iceTransportPolicy: 'relay',
             config: {
                 iceServers: [
-                    { urls: 'stun:stun4.l.google.com:19302' },
+                    { urls: process.env.REACT_APP_STUN_SERVERS.split(',') },
                     {
-                        urls: 'turn:numb.viagenie.ca?transport=udp',
-                        username: 'hajar.zemzem@gmail.com',
-                        credential: 'Zemzem.25'
+                        urls: process.env.REACT_APP_TURN_SERVERS.split(','),
+                        username: process.env.REACT_APP_TURN_USERNAME,
+                        credential: process.env.REACT_APP_TURN_CREDENCIAL
                     },
                 ]
             }
@@ -24,5 +24,5 @@ export default class VideoCall {
     }
     connect = (otherId) => {
         this.peer.signal(otherId)
-    }
-}
+    }  
+} 

@@ -19,7 +19,7 @@ html {
 }
 
 .enter-room-container form {
-    display: block;
+    display: flex;
 }
 
 .enter-room-container input {
@@ -34,20 +34,11 @@ html {
 
 .enter-room-container button {
     background: #44ffd2;
-    width: 125px;
+    width: 100px;
     border: none;
     margin-left: 24px;
-    padding: 20px 5px;
     font-size: 20px;
     color: #0c1b33;
-    text-transform: uppercase;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.enter-room-container h1 {
-    font-size: 24px;
-    color: #44ffd2;
     text-transform: uppercase;
     font-weight: bold;
 }
