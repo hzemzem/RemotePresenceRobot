@@ -10,8 +10,6 @@ import smiley_face from '../assets/images/smiley-face.svg';
 import frowning_face from '../assets/images/frowning-face.svg';
 import switch_off from '../assets/images/switch-off.svg';
 import switch_on from '../assets/images/switch-on.svg';
-// import bodyPix from '@tensorflow-models/body-pix';
-import { LocalVideoEffectors, ModelConfigMobileNetV1, ModelConfigResNet, getDeviceLists } from 'local-video-effector';
 
 class Video extends React.Component {
   constructor() {
