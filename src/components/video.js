@@ -1,4 +1,4 @@
-import React, {  useState } from 'react';
+import React, { useState } from 'react';
 import VideoCall from '../helpers/simple-peer';
 import '../styles/video.css';
 import io from 'socket.io-client';
@@ -10,6 +10,8 @@ import smiley_face from '../assets/images/smiley-face.svg';
 import frowning_face from '../assets/images/frowning-face.svg';
 import switch_off from '../assets/images/switch-off.svg';
 import switch_on from '../assets/images/switch-on.svg';
+// import bodyPix from '@tensorflow-models/body-pix';
+import { LocalVideoEffectors, ModelConfigMobileNetV1, ModelConfigResNet, getDeviceLists } from 'local-video-effector';
 
 class Video extends React.Component {
   constructor() {
@@ -147,11 +149,13 @@ class Video extends React.Component {
   call = otherId => {
     this.videoCall.connect(otherId);
   };
+
   renderFull = () => {
     if (this.state.full) {
       return 'The room is full';
     }
   };
+
   render() {
     return (
 
@@ -243,7 +247,7 @@ class Video extends React.Component {
           </div>
           <div className="sidebar">
             <div className="sidebar-container">
-              <details className="dropdown-item">
+              {/* <details className="dropdown-item">
                 <summary className="list-title">Voice Effects</summary>
                 <ul>
                   <li className="list-item">
@@ -253,16 +257,28 @@ class Video extends React.Component {
                     Test Item
                   </li>
                 </ul>
-              </details>
+              </details> */}
               <details className="dropdown-item list-closed">
                 <summary className="list-title">Filters</summary>
                 <ul>
-                  <li className="list-item">
-                    Test Item
-                  </li>
-                  <li className="list-item">
-                    Test Item
-                  </li>
+                  <li className="list-item" onClick={() => {
+                    document.getElementById("localVideo").style.filter = "brightness(1.10) hue-rotate(135deg)";
+                  }}>Color Change</li>
+                  <li className="list-item" onClick={() => {
+                    document.getElementById("localVideo").style.filter = "invert(1)";
+                  }}>Inversion</li>
+                  <li className="list-item" onClick={() => {
+                    document.getElementById("localVideo").style.filter = "opacity(0.55) sepia(0.89)";
+                  }}>B&W</li>
+                  <li className="list-item" onClick={() => {
+                    document.getElementById("localVideo").style.filter = "brightness(1.50) saturate(4.00)";
+                  }}>Neon Figure</li>
+                  <li className="list-item" onClick={() => {
+                    document.getElementById("localVideo").style.filter = "brightness(0.75) contrast(3.00)";
+                  }}>Darkness</li>
+                  <li className="list-item" onClick={() => {
+                    document.getElementById("localVideo").style.filter = "none";
+                  }}>Clear</li>
                 </ul>
               </details>
               <details className="dropdown-item list-closed">
@@ -277,11 +293,11 @@ class Video extends React.Component {
                 </ul>
               </details>
             </div>
-            <div className="emotion-section">
+            {/* <div className="emotion-section">
               <img className="smiley_face" src={smiley_face} alt="Smiley Face" />
               <img className="neutral_face" src={neutral_face} alt="Neutral Face" />
               <img className="frowning_face" src={frowning_face} alt="Frowning Face" />
-            </div>
+            </div> */}
           </div>
         </div>
         {this.renderFull()}

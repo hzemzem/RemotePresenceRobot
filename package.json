@@ -3,7 +3,10 @@
     "version": "0.1.0",
     "private": true,
     "dependencies": {
+        "@mediapipe/selfie_segmentation": "^0.1.1632777926",
+        "@tensorflow-models/body-pix": "^2.2.0",
         "express": "^4.16.4",
+        "local-video-effector": "^1.0.39",
         "react": "^16.8.6",
         "react-dom": "^16.8.6",
         "react-router-dom": "^4.2.2",
