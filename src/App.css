@@ -1,3 +1,9 @@
+body,
+html {
+    padding: 0;
+    margin: 0;
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600&display=swap');
 .App {
     text-align: center;
@@ -23,16 +29,6 @@
     color: #61dafb;
 }
 
-.box {
-    background-image: url("./images/robot-background.png");
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    bottom: 0px;
-    left: 0px;
-    z-index: -1;
-}
-
 .button {
     background-color: #04AA6D;
     border: none;
@@ -56,9 +52,11 @@
 }
 
 .video-chat-page.container .video-chat-window {
-    width: 75%;
+    width: 80%;
     float: left;
     min-height: 100%;
+    position: relative;
+    height: 90vh;
 }
 
 .placeholder-img {
@@ -68,7 +66,7 @@
 }
 
 .video-chat-page.container .sidebar {
-    width: 25%;
+    width: 20%;
     float: left;
 }
 
@@ -82,7 +80,8 @@
 }
 
 .list-item:hover {
-    background-color: #EDF2F7;
+    color: #44ffd2;
+    font-weight: bold;
 }
 
 .dropdown-item ul {
@@ -98,7 +97,7 @@
 }
 
 .dropdown-item summary:hover {
-    color: #5A67D8;
+    color: #44ffd2;
 }
 
 .navbar {
@@ -167,4 +166,9 @@
     float: left;
     margin: 5px 20px 0 0;
     font: 600 18px 'Source Sans Pro';
+}
+
+.list-title,
+.list-item {
+    color: #EDF2F7;
 }
