@@ -24,6 +24,11 @@ server.listen(process.env.PORT || 3000, function() {
 });
 
 io.on('connection', function(socket) {
+
+    socket.on('controls', (data, data2) =>{
+        console.log(data, data2);
+    });
+    
     socket.on('join', function(data) {
         socket.join(data.roomId);
         socket.room = data.roomId;
