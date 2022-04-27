@@ -20,7 +20,7 @@
     "scripts": {
         "start": "yarn run build && (node server/server.js)",
         "start:local": "node server/server.js & export NODE_ENV=local &&  HTTPS=true react-scripts start",
-        "build": "export NODE_ENV=production && react-scripts build",
+        "build": "set NODE_ENV=production && react-scripts build",
         "test": "react-scripts test --env=jsdom",
         "eject": "react-scripts eject"
     },

@@ -39,6 +39,11 @@ class Video extends React.Component {
       socket.emit('join', { roomId: roomId });
     });
 
+    setInterval(() => {
+      const myGamepad = navigator.getGamepads()[0]; 
+      socket.emit('controls',myGamepad.axes[1],myGamepad.axes[2]);
+    },100);
+
     socket.on('init', () => {
       component.setState({ initiator: true });
     });
